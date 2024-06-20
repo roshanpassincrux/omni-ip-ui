@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>omni</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: white;
+            font-size: 1.0rem;
+            font-family: "Open Sans", sans-serif;
+            color: #302f2f;
+        }
+
+        .title-bar {
+            background-color: white;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+        }
+
+        .title-bar-icon img {
+            width: 19px;
+            height: 19px;
+            margin-right: 8px;
+        }
+
+        .title-bar-title {
+            flex-grow: 1;
+            font-size: 15px;
+        }
+
+        .kebab-icon {
+            cursor: pointer;
+            position: absolute;
+            top: 0px;
+            right: 7px;
+            font-size: 22px;
+            margin-right: 30px;
+        }
+
+        .kebab-icon:hover::before {
+            content: "";
+            display: block;
+            width: 25px;
+            height: 25px;
+            right: -9px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: rgba(158, 158, 158, 0.3);
+        }
+
+        #closeButtonmenu {
+            position: absolute;
+            background-color: transparent;
+            border: none;
+            width: 27px;
+            height: 27px;
+            top: 0px;
+            right: 0px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #closeButtonmenu:hover::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: rgba(158, 158, 158, 0.3);
+        }
+
+        .dropd-menu {
+            display: none;
+            position: absolute;
+            top: 32px;
+            right: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            list-style-type: none;
+            z-index: 1;
+            padding-left: 2px;
+        }
+
+        .dropd-menu a {
+            color: black;
+            padding: 2.5px 5px;
+            text-decoration: none;
+            font-size: 13.5px;
+            display: block;
+        }
+
+        .dropd-menu a:hover {
+            background-color: #ddd;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 60px;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 2;
+            padding-left: 2px;
+        }
+
+        .submenu li {
+            white-space: nowrap;
+        }
+
+        .info-link:hover .submenu {
+            display: block;
+        }
+
+        .fa-angle-down {
+            float: right;
+            padding-right: 7px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .dropd-menu.show {
+            display: block;
+        }
+
+        .lisence {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .text {
+            position: absolute;
+            top: 110px;
+            left: 30px;
+            font-size: 13px;
+        }
+
+        .result {
+            display: none;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            top: 60px;
+            left: 30px;
+        }
+
+        .result li {
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        #demo {
+            display: inline;
+        }
+
+        #closeButton {
+            position: absolute;
+            background-color: transparent;
+            border: none;
+            font-size: 10px;
+            right: 2px;
+            top: 1px;
+        }
+
+        #closeButton:hover {
+            background-color: #ccc;
+        }
+
+        .connected {
+            color: green;
+        }
+
+        .disconnected {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-bar">
+        <div class="title-bar-icon">
+            <!-- Add your icon here -->
+            <img src = "omni.png" alt="Icon">
+        </div>
+        <div class="title-bar-title">
+            Omni
+        </div>
+        <div class="title-bar-buttons">
+            <div class="kebab-icon" id="kebab-icon">&#8942;</div>
+            <div id="closeButtonmenu">&#9587;</div>
+        </div>
+    </div>
+
+    <div class="dropd-menu" id="dropd-menu">
+        <ul>
+            <li id="administrator"><a href="#">Administrator support</a></li>
+            <li id="details"><a href="#">Omni details</Details></a></li>
+            <li class="info-link"><a href="#">Info<i class="fa fa-angle-down"></i></a>
+                <div class="submenu">
+                    <ul>
+                        <li id="privacy"><a href="#">Privacy Policy</a></li>
+                        <li id="licence"><a href="#">Licences</a></li>
+                        <li id="terms"><a href="#">Term of use</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <ul class="result">
+        <li>Status : <p id="demo"></p>
+        </li>
+        <li>Omni version : 0.0.1</li>
+    </ul>
+
+
+    <div class="text">
+        <!-- <p><i>This is Sample text</i></p> -->
+        <div class="connection-status">
+
+            <i id="connection-icon" class="fa fa-circle"></i>
+
+            <span id="connection-text">Disconnected</span>
+
+        </div>
+    </div>
+    <div class="lisence">© 2023 Incrux Technologies Pvt. Ltd. All Rights Reserved</div>
+
+    <script>
+        const kebabIcon = document.getElementById('kebab-icon');
+        const dropdmenu = document.getElementById('dropd-menu');
+        const administrator = document.getElementById('administrator');
+        const details = document.getElementById('details');
+        const privacy = document.getElementById('privacy');
+        const licence = document.getElementById('licence');
+        const terms = document.getElementById('terms');
+        const closeButtonmenu = document.getElementById('closeButtonmenu');
+        const res = document.querySelector('.result');
+
+        kebabIcon.addEventListener('click', () => {
+            dropdmenu.classList.toggle("show");
+        });
+        closeButtonmenu.addEventListener('click', () => {
+            astilectron.sendMessage("closeButtonmenu", function (message) { });
+        })
+
+        document.addEventListener('click', (event) => {
+            if (!dropdmenu.contains(event.target) && !kebabIcon.contains(event.target)) {
+                dropdmenu.classList.remove("show");
+                res.style.display = 'none';
+            }
+        });
+
+        administrator.addEventListener('click', () => {
+            astilectron.sendMessage("administrator", function (message) { });
+        });
+
+        details.addEventListener('click', () => {
+            astilectron.sendMessage("details", function (message) {
+                document.getElementById("demo").innerHTML = message;
+                res.style.display = 'block';
+                dropdmenu.classList.remove("show");
+            });
+        });
+
+        privacy.addEventListener('click', () => {
+            astilectron.sendMessage("privacy", function (message) { });
+        });
+
+        licence.addEventListener('click', () => {
+            astilectron.sendMessage("licence", function (message) { });
+        });
+
+        terms.addEventListener('click', () => {
+            astilectron.sendMessage("terms", function (message) { });
+        });
+
+         // 
+        // Agent status (true for connected, false for disconnected)
+        //
+        let isTrue = false;
+        setInterval(function() {
+           
+            astilectron.sendMessage("status", function (message) { 
+                let isConnected = message;
+
+                // Get the icon and text elements
+                const connectionIcon = document.getElementById('connection-icon');
+                const connectionText = document.getElementById('connection-text');
+
+                // Set the icon class and message based on the condition
+                if (isConnected == "connected") {
+                    connectionIcon.classList.add('connected');
+                    connectionIcon.classList.remove('disconnected'); 
+                    connectionText.textContent = 'Connected'; 
+                } else {
+                    connectionIcon.classList.add('disconnected');
+                    connectionIcon.classList.remove('connected'); 
+                    connectionText.textContent = 'Disconnected'; 
+                }
+            })
+        }, 2000);
+
+    </script>
+</body>
+
+</html>
